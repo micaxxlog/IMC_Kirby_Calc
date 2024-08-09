@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+    <style>
+        body {
+            font-family: 'Lobster', cursive;
+            background-color: #fc6698;
+            background-image: url('https://getwallpapers.com/wallpaper/full/1/4/a/1377263-kirby-wallpaper-1920x1200-for-ios.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        .field-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .field-container input {
+            width: 48%;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffa7c9;
+            color: rgb(112, 9, 73);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #ff8cb3;
+        }
+        .message {
+            color: red;
+            display: none;
+        }
+        .kirby-image {
+            max-width: 200px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="imcCalculator" class="container">
+        <h2>¿Qué tipo de Kirby eres según tu IMC?</h2>
+        <form id="imcForm" method="POST">
+            <input type="number" id="altura" placeholder="Altura (cm)" required>
+            <input type="number" id="peso" placeholder="Peso (kg)" required>
+            <button type="submit">Calcular IMC</button>
+        </form>
+        <p id="resultadoIMC"></p>
+        <img id="kirbyImage" class="kirby-image" src="" alt="">
+        <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    </div>
+    <script>
+        document.getElementById('imcForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const altura = parseFloat(document.getElementById('altura').value) / 100; // Convertir altura a metros
+            const peso = parseFloat(document.getElementById('peso').value);
+            
+            if (altura > 0 && peso > 0) {
+                const imc = peso / (altura * altura);
+                let estado = '';
+                let kirbyTipo = '';
+                let kirbyImageSrc = '';
+                if (imc < 18.5) {
+                    estado = 'Tienes bajo peso';
+                    kirbyTipo = 'Un Kirby Arco Volador';
+                    kirbyImageSrc = 'https://nintenduo.com/wp-content/uploads/2022/03/Tranformaciones-de-Kirby-11-720x416.webp';
+                } else if (imc >= 18.5 && imc < 24.9) {
+                    estado = 'Tu peso es normal';
+                    kirbyTipo = 'Un Kirby Pistolero';
+                    kirbyImageSrc = 'https://mediamaster.vandal.net/m/107608/kirby-y-la-tierra-olvidada-2022331236483_3.jpg';
+                } else if (imc >= 25 && imc < 29.9) {
+                    estado = 'Tienes sobrepeso';
+                    kirbyTipo = 'Un Kirby Burbuja de Agua';
+                    kirbyImageSrc = 'https://nintenduo.com/wp-content/uploads/2022/03/Tranformaciones-de-Kirby-5-1024x576.webp';
+                } else {
+                    estado = 'Tienes obesidad';
+                    kirbyTipo = 'Un Kirby Camión';
+                    kirbyImageSrc = 'https://nintenduo.com/wp-content/uploads/2022/03/Tranformaciones-de-Kirby-15-1-720x416.webp';
+                }
+                document.getElementById('resultadoIMC').innerText = `Tu IMC es: ${imc.toFixed(2)} (${estado}). Serías: ${kirbyTipo}`;
+                document.getElementById('kirbyImage').src = kirbyImageSrc;
+                document.getElementById('kirbyImage').style.display = 'block';
+            } else {
+                document.getElementById('resultadoIMC').innerText = "Ingresa valores válidos >:c";
+                document.getElementById('kirbyImage').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
