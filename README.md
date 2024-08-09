@@ -6,7 +6,7 @@ Pasos a seguir:
 
 git clone https://github.com/micaxxlog/IMC_Kirby_Calc.git
 
-cd /IMC_Kirby_Calc/IMC_Kirby_Calc
+cd IMC_Kirby_Calc/IMC_Kirby_Calc
 
 sudo apt update
 
