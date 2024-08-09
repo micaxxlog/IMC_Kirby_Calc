@@ -10,7 +10,6 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 COPY app.py app.py
 COPY templates/ templates/
-COPY static/ static/
 
 RUN python3 -m venv venv
 ENV PATH="/app/venv/bin:$PATH"
